@@ -1,0 +1,38 @@
+{
+  "name": "menuy",
+  "version": "0.1.0",
+  "description": "A lightweight, dependency-free library to create a highly customizable, well-structured menu.",
+  "main": "dist/menuy.js",
+  "module": "dist/menuy.esm.js",
+  "browser": "dist/menuy.umd.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TaylonChan/menuy.git"
+  },
+  "keywords": [
+    "menu",
+    "sidebar",
+    "navigation",
+    "ui",
+    "component",
+    "frontend",
+    "javascript"
+  ],
+  "author": "Taylon Chan <tchan199616@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TaylonChan/menuy/issues"
+  },
+  "homepage": "https://github.com/TaylonChan/menuy#readme",
+  "devDependencies": {
+    "rollup": "^4.17.2",
+    "jest": "^29.7.0"
+  }
+}
