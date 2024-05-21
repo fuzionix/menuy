@@ -1,7 +1,7 @@
 {
   "name": "menuy",
   "version": "0.1.0",
-  "description": "A lightweight, dependency-free library to create a highly customizable, well-structured web menu component.",
+  "description": "A lightweight, dependency-free library to create a highly customizable, well-structured panel menu component.",
   "main": "dist/menuy.js",
   "module": "dist/menuy.esm.js",
   "browser": "dist/menuy.umd.js",
@@ -11,6 +11,7 @@
     "dist"
   ],
   "scripts": {
+    "watch": "rollup -c --watch",
     "build": "rollup -c",
     "test": "jest"
   },
