@@ -22,6 +22,7 @@ const config = [
     ],
     plugins: [
       babel({
+        babelHelpers: 'bundled',
         exclude: 'node_modules/**'
       }),
       terser()

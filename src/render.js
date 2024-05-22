@@ -7,14 +7,7 @@ export function renderTree(menuData, layer = 1) {
     const liItemText = document.createElement('p')
 
     if (item.hasOwnProperty('icon')) {
-      let icon = null
-      if (item.hasOwnProperty('iconTag') && (item.iconTag === 'i')) {
-        icon = document.createElement(item.iconTag)
-      } else {
-        icon = document.createElement('img')
-      }
-      
-      liItem.appendChild(icon)
+      liItem.appendChild(createIcon(item))
     }
 
     liItemText.textContent = item.name
@@ -62,4 +55,14 @@ export function initElement(element) {
     }
   `
   document.head.appendChild(styleElement)
+}
+
+function createIcon(item) {
+  let icon = null
+  if (item.hasOwnProperty('iconTag') && (item.iconTag === 'i')) {
+    icon = document.createElement(item.iconTag)
+  } else {
+    icon = document.createElement('img')
+  }
+  return icon
 }
