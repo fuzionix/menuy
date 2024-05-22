@@ -4,9 +4,23 @@ export function renderTree(menuData, layer = 1) {
   for (const item of menuData) {
     const li = document.createElement('li')
     const liItem = document.createElement('button')
-    liItem.textContent = item.name
+    const liItemText = document.createElement('p')
+
+    if (item.hasOwnProperty('icon')) {
+      let icon = null
+      if (item.hasOwnProperty('iconTag') && (item.iconTag === 'i')) {
+        icon = document.createElement(item.iconTag)
+      } else {
+        icon = document.createElement('img')
+      }
+      
+      liItem.appendChild(icon)
+    }
+
+    liItemText.textContent = item.name
+    liItem.appendChild(liItemText)
     liItem.addEventListener('click', () => {
-      window.location.href = '#';
+      window.location.href = '#'
     })
     li.appendChild(liItem)
 
@@ -23,9 +37,28 @@ export function renderTree(menuData, layer = 1) {
 
 export function initElement(element) {
   const styleElement = document.createElement('style')
+  const selector = `${element.tagName.toLowerCase()}[data-menuy]`
   styleElement.textContent = `
-    ${element.tagName.toLowerCase()}[data-menuy=${element.getAttribute('data-menuy')}] * {
-      all: initial;
+    ${selector} *, 
+    ${selector} *::before, 
+    ${selector} *::after {
+      box-sizing: border-box;
+    }
+
+    ${selector} * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline
+    }
+
+    ${selector} {
+        line-height: 1
+    }
+    ${selector} ol, ${selector} ul{
+        list-style: none
     }
   `
   document.head.appendChild(styleElement)
