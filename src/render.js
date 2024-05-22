@@ -20,3 +20,13 @@ export function renderTree(menuData, layer = 1) {
 
   return ul
 }
+
+export function initElement(element) {
+  const styleElement = document.createElement('style')
+  styleElement.textContent = `
+    ${element.tagName.toLowerCase()}[data-menuy=${element.getAttribute('data-menuy')}] * {
+      all: initial;
+    }
+  `
+  document.head.appendChild(styleElement)
+}
