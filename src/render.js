@@ -1,4 +1,6 @@
-export function renderTree(menuData, layer = 1) {
+import { defaultConfig } from "./config"
+
+export function renderTree(menuData, layer = 1, config = {}) {
   const ul = document.createElement('ul')
 
   for (const item of menuData) {
@@ -7,7 +9,7 @@ export function renderTree(menuData, layer = 1) {
     const liItemText = document.createElement('p')
 
     if (item.hasOwnProperty('icon')) {
-      liItem.appendChild(createIcon(item))
+      liItem.appendChild(createIcon(item, layer, config))
     }
 
     liItemText.textContent = item.name
@@ -18,7 +20,7 @@ export function renderTree(menuData, layer = 1) {
     li.appendChild(liItem)
 
     if (item.children) {
-      const childUl = renderTree(item.children, layer + 1)
+      const childUl = renderTree(item.children, layer + 1, config)
       li.appendChild(childUl)
     }
 
@@ -57,10 +59,10 @@ export function initElement(element) {
   document.head.appendChild(styleElement)
 }
 
-function createIcon(item) {
+function createIcon(item, layer, config) {
   let icon = null
-  if (item.hasOwnProperty('iconTag') && (item.iconTag === 'i')) {
-    icon = document.createElement(item.iconTag)
+  if (config?.layer?.[layer - 1]?.icon?.tag) {
+    icon = document.createElement(config.layer[layer - 1].icon.tag)
   } else {
     icon = document.createElement('img')
   }
