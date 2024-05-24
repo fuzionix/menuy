@@ -1,4 +1,4 @@
-import { defaultConfig } from "./config"
+import { hasProperty } from "./util"
 
 export function renderTree(menuData, depth = 1, config = {}) {
   const ul = document.createElement('ul')
@@ -7,10 +7,9 @@ export function renderTree(menuData, depth = 1, config = {}) {
     const li = document.createElement('li')
     const liItem = document.createElement('button')
     const liItemText = document.createElement('p')
-    const configLayer = config?.layer || defaultConfig.layer
 
-    if (item.hasOwnProperty('icon')) {
-      liItem.appendChild(createIcon(item, configLayer?.[depth - 1]))
+    if (hasProperty(item, 'icon') || hasProperty(config.layer[Math.min(config.layer.length, depth) - 1], 'icon')) {
+      liItem.appendChild(createIcon(item, config.layer[Math.min(config.layer.length, depth) - 1]))
     }
 
     liItemText.textContent = item.name
@@ -62,8 +61,8 @@ export function initElement(element) {
 
 function createIcon(item, layerItem) {
   let icon = null
-  if (layerItem.icon.tag) {
-    icon = document.createElement(layerItem.icon.tag)
+  if (hasProperty(layerItem, 'iconType') && hasProperty(layerItem.iconType, 'tag') && (layerItem.iconType.tag === 'i')) {
+    icon = document.createElement(layerItem.iconType.tag)
   } else {
     icon = document.createElement('img')
   }
