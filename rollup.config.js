@@ -22,11 +22,13 @@ const config = [
     ],
     plugins: [
       babel({
-        babelHelpers: 'bundled',
+        babelHelpers: 'runtime',
+        plugins: ['@babel/plugin-transform-runtime'],
         exclude: 'node_modules/**'
       }),
       terser()
-    ]
+    ],
+    external: [/@babel\/runtime/]
   },
   {
     input: 'src/index.js',
@@ -37,7 +39,12 @@ const config = [
       }
     ],
     plugins: [
-      dts()
+      dts(),
+      babel({
+        babelHelpers: 'runtime',
+        plugins: ['@babel/plugin-transform-runtime'],
+        exclude: 'node_modules/**'
+      })
     ]
   }
 ]
