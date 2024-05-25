@@ -1,6 +1,6 @@
 import { renderTree, initElement } from "./render"
 import { defaultConfig } from "./config"
-import { validate } from "./validate"
+import { validateData } from "./validate"
 
 export function create(menuData, target, config) {
   const container = document.querySelector(`[data-menuy="${target}"]`)
@@ -8,14 +8,13 @@ export function create(menuData, target, config) {
   config = initConfig(config)
 
   try {
-    menuData = validate(menuData, menuDataSchema)
+    const validatedMenuData = validateData(menuData, menuDataSchema)
+    const menuTree = renderTree(validatedMenuData, 1, config)
+    container.appendChild(menuTree)
+    return menuTree
   } catch (err) {
     console.error(err)
   }
-  
-  const menuTree = renderTree(menuData, 1, config)
-  container.appendChild(menuTree)
-  return menuTree
 }
 
 function initConfig(config) {
