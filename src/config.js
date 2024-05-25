@@ -3,9 +3,8 @@ export const defaultConfig = {
   observable: true,
   layer: [
     {
-      icon: '',
       iconType: {
-        tag: 'i',
+        tag: 'img',
         attribute: 'src'
       }
     }

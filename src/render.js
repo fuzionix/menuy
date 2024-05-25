@@ -7,9 +7,10 @@ export function renderTree(menuData, depth = 1, config = {}) {
     const li = document.createElement('li')
     const liItem = document.createElement('button')
     const liItemText = document.createElement('p')
+    const layerItem = config.layer[Math.min(config.layer.length, depth) - 1]
 
-    if (hasProperty(item, 'icon') || hasProperty(config.layer[Math.min(config.layer.length, depth) - 1], 'icon')) {
-      liItem.appendChild(createIcon(item, config.layer[Math.min(config.layer.length, depth) - 1]))
+    if (hasProperty(item, 'icon') || hasProperty(layerItem, 'icon')) {
+      liItem.appendChild(createIcon(item, layerItem))
     }
 
     liItemText.textContent = item.name
