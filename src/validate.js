@@ -14,9 +14,14 @@ export function validateData(data, schema, root = true) {
     if (item.children) {
       validateData(item.children, schema, false)
     }
-  }
 
-  for (const [key, rule] of Object.entries(schema)) {
+    for (const [key, rule] of Object.entries(schema)) {
+      const value = item[key]
+
+      if (rule.required && value === undefined) {
+        throw new Error(`${prefix}: ${key} is required`);
+      }
+    }
   }
 
   return data

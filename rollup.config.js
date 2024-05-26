@@ -8,20 +8,34 @@ const config = [
     output: [
       {
         file: 'dist/menuy.js',
-        format: 'cjs',
-        sourcemap: true
+        format: 'cjs'
       },
       {
         file: 'dist/menuy.esm.js',
-        format: 'esm',
-        sourcemap: true
+        format: 'esm'
       },
       {
         file: 'dist/menuy.umd.js',
         format: 'umd',
-        name: 'Menuy',
-        sourcemap: true
+        name: 'Menuy'
       }
+    ],
+    plugins: [
+      babel({
+        babelHelpers: 'bundled',
+        presets: ['@babel/preset-env'],
+        exclude: 'node_modules/**'
+      })
+    ],
+  },
+  {
+    input: 'src/index.js',
+    output: [
+      {
+        file: 'dist/menuy.min.js',
+        format: 'esm',
+        sourcemap: true
+      },
     ],
     plugins: [
       babel({
@@ -46,8 +60,7 @@ const config = [
         babelHelpers: 'bundled',
         presets: ['@babel/preset-env'],
         exclude: 'node_modules/**'
-      }),
-      terser()
+      })
     ],
   }
 ]
