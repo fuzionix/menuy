@@ -1,11 +1,11 @@
 export function validateData(data, schema, root = true) {
-  const message = 'Menuy Validation Error'
+  const prefix = '[Menuy] Validation Error'
 
   if (!Array.isArray(data) || data === null) {
     if (root) {
-      throw new Error(`${message}: menuData must be an array`)
+      throw new Error(`${prefix}: menuData must be an array`)
     } else {
-      throw new Error(`${message}: children must be an array`)
+      throw new Error(`${prefix}: children must be an array`)
     }
     
   }

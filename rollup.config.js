@@ -9,26 +9,28 @@ const config = [
       {
         file: 'dist/menuy.js',
         format: 'cjs',
+        sourcemap: true
       },
       {
         file: 'dist/menuy.esm.js',
         format: 'esm',
+        sourcemap: true
       },
       {
         file: 'dist/menuy.umd.js',
         format: 'umd',
         name: 'Menuy',
+        sourcemap: true
       }
     ],
     plugins: [
       babel({
-        babelHelpers: 'runtime',
-        plugins: ['@babel/plugin-transform-runtime'],
+        babelHelpers: 'bundled',
+        presets: ['@babel/preset-env'],
         exclude: 'node_modules/**'
       }),
       terser()
     ],
-    external: [/@babel\/runtime/]
   },
   {
     input: 'src/index.js',
@@ -41,11 +43,12 @@ const config = [
     plugins: [
       dts(),
       babel({
-        babelHelpers: 'runtime',
-        plugins: ['@babel/plugin-transform-runtime'],
+        babelHelpers: 'bundled',
+        presets: ['@babel/preset-env'],
         exclude: 'node_modules/**'
-      })
-    ]
+      }),
+      terser()
+    ],
   }
 ]
 
