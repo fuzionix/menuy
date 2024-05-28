@@ -32,32 +32,42 @@ export function renderTree(menuData, depth = 1, config = {}) {
 }
 
 export function initElement(element) {
-  const styleElement = document.createElement('style')
-  const selector = `${element.tagName.toLowerCase()}[data-menuy]`
-  styleElement.textContent = `
-    ${selector} *, 
-    ${selector} *::before, 
-    ${selector} *::after {
-      box-sizing: border-box;
-    }
+  const styleName = 'menuy-init'
+  // RESET ELEMENT
+  while (element.firstChild) {
+    element.removeChild(element.firstChild)
+  }
 
-    ${selector} * {
-      margin: 0;
-      padding: 0;
-      border: 0;
-      font-size: 100%;
-      font: inherit;
-      vertical-align: baseline
-    }
+  if (document.getElementById(styleName) === null) {
+    const styleElement = document.createElement('style')
+    const selector = `${element.tagName.toLowerCase()}[data-menuy]`
+    styleElement.setAttribute('id', styleName)
+    styleElement.textContent = `
+      ${selector} *, 
+      ${selector} *::before, 
+      ${selector} *::after {
+        box-sizing: border-box;
+      }
 
-    ${selector} {
-        line-height: 1
-    }
-    ${selector} ol, ${selector} ul{
-        list-style: none
-    }
-  `
-  document.head.appendChild(styleElement)
+      ${selector} * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline
+      }
+
+      ${selector} {
+          line-height: 1
+      }
+      ${selector} ol, ${selector} ul{
+          list-style: none
+      }
+    `
+
+    document.head.appendChild(styleElement)
+  }
 }
 
 function createIcon(item, layerItem) {

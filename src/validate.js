@@ -1,11 +1,11 @@
-export function validateData(data, schema, root = true) {
-  const prefix = '[Menuy] Validation Error'
+import { ValidationError } from './error'
 
+export function validateData(data, schema, root = true) {
   if (!Array.isArray(data) || data === null) {
     if (root) {
-      throw new Error(`${prefix}: menuData must be an array`)
+      throw new ValidationError(`menuData must be an array`, { input: data })
     } else {
-      throw new Error(`${prefix}: children must be an array`)
+      throw new ValidationError(`children must be an array`, { input: data })
     }
     
   }
@@ -19,7 +19,7 @@ export function validateData(data, schema, root = true) {
       const value = item[key]
 
       if (rule.required && value === undefined) {
-        throw new Error(`${prefix}: ${key} is required`);
+        throw new ValidationError(`${key} is required`, { input: item });
       }
     }
   }

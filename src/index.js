@@ -1,6 +1,7 @@
 import { renderTree, initElement } from "./render"
 import { defaultConfig } from "./config"
 import { validateData } from "./validate"
+import { ValidationError } from './error';
 
 export function create(menuData, target, config) {
   const container = document.querySelector(`[data-menuy="${target}"]`)
@@ -13,8 +14,27 @@ export function create(menuData, target, config) {
     container.appendChild(menuTree)
     return menuTree
   } catch (err) {
-    console.error(err)
+    if (err instanceof ValidationError) {
+      console.error(`${err.prefix}: ${err.message}`, err.data)
+    } else {
+      console.error(err)
+    }
   }
+}
+
+export function observe() {
+  const handler = {
+    get: function(target, property, receiver) {
+      return target?.[property] || ''
+    },
+    set: function(target, property, value, receiver) {
+      target = target || {}
+      target[property] = value
+      return true
+    }
+  }
+
+  return new Proxy([], handler)
 }
 
 function initConfig(config) {
