@@ -52,7 +52,15 @@ const menuDataSchema = {
     type: 'array'
   },
   icon: {
-    type: 'string'
+    type: 'string',
+  },
+  style: {
+    type: 'object',
+    schema: {
+      height: {
+        type: 'string',
+      }
+    }
   }
 }
 

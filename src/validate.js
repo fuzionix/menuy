@@ -15,14 +15,24 @@ export function validateData(data, schema, root = true) {
       validateData(item.children, schema, false)
     }
 
-    for (const [key, rule] of Object.entries(schema)) {
-      const value = item[key]
-
-      if (rule.required && value === undefined) {
-        throw new ValidationError(`${key} is required`, { input: item });
-      }
-    }
+    iterateSchema(item, schema)
   }
 
   return data
+}
+
+function iterateSchema(item, schema) {
+  for (const [key, rule] of Object.entries(schema)) {
+    const value = item[key]
+
+    if (rule.schema) {
+      iterateSchema(item, rule.schema)
+    }
+
+    if (rule.required && value === undefined) {
+      throw new ValidationError(`${key} is required`, { input: item });
+    }
+  }
+
+  return schema
 }
