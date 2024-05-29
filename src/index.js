@@ -1,9 +1,10 @@
 import { renderTree, initElement } from "./render"
 import { defaultConfig } from "./config"
 import { validateData } from "./validate"
-import { ValidationError } from './error';
+import { ValidationError } from './error'
+import { hasProperty } from "./util"
 
-export function create(menuData, target, config) {
+export function create(menuData = [], target = '', config = {}) {
   const container = document.querySelector(`[data-menuy="${target}"]`)
   initElement(container)
   config = initConfig(config)
@@ -12,7 +13,7 @@ export function create(menuData, target, config) {
     const validatedMenuData = validateData(menuData, menuDataSchema)
     const menuTree = renderTree(validatedMenuData, 1, config)
     container.appendChild(menuTree)
-    return menuTree
+    return { self: this, target, config, result: menuTree }
   } catch (err) {
     if (err instanceof ValidationError) {
       console.error(`${err.prefix}: ${err.message}`, err.data)
@@ -22,12 +23,19 @@ export function create(menuData, target, config) {
   }
 }
 
-export function observe() {
+export function observe(create) {
+  if (typeof create !== 'object' || create === null || !hasProperty(create, 'self')) {
+    if (create.self !== this) {
+      throw new ValidationError('Invalid create argument. Only accept menuy.create() as an argument of observe()', { input: create })
+    }
+  }
+
   const handler = {
     get: function(target, property, receiver) {
       return target?.[property] || ''
     },
     set: function(target, property, value, receiver) {
+      create.self.create(value, create.target, create.config)
       target = target || {}
       target[property] = value
       return true
@@ -54,16 +62,16 @@ const menuDataSchema = {
   icon: {
     type: 'string',
   },
-  style: {
-    type: 'object',
-    schema: {
-      height: {
-        type: 'string',
-      }
-    }
+  disabled: {
+    type: 'boolean'
   }
 }
 
 const configSchema = {
 
+}
+
+export default {
+  create,
+  observe
 }
