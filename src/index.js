@@ -24,10 +24,8 @@ export function create(menuData = [], target = '', config = {}) {
 }
 
 export function observe(create) {
-  if (typeof create !== 'object' || create === null || !hasProperty(create, 'self')) {
-    if (create.self !== this) {
-      throw new ValidationError('Invalid create argument. Only accept menuy.create() as an argument of observe()', { input: create })
-    }
+  if (typeof create !== 'object' || create === null || !hasProperty(create, 'self') || create.self !== this) {
+    throw new ValidationError('Invalid create argument. Only accept menuy.create() as an argument of observe()', { input: create })
   }
 
   const handler = {
