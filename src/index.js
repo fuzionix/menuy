@@ -44,10 +44,15 @@ function observe(create) {
 }
 
 function initConfig(config, defaultConfig) {
+  // Limit the number of array item not exceeding the user's number of array item to ensure complete array overwritten
+  if (Array.isArray(defaultConfig)) {
+    defaultConfig = defaultConfig.slice(0, (defaultConfig.length - config.length) * -1)
+  }
+
   const mergedConfig = defaultConfig
   for (const [key, value] of Object.entries(config)) {
     if (typeof value === 'object') {
-      initConfig(value, mergedConfig[key] || {})
+      mergedConfig[key] = initConfig(value, mergedConfig[key] || {})
     } else {
       if (hasProperty(mergedConfig, key)) {
         mergedConfig[key] = config[key]
