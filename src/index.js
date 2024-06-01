@@ -4,16 +4,16 @@ import { validateData } from "./validate"
 import { ValidationError } from './error'
 import { hasProperty } from "./util"
 
-export function create(menuData = [], target = '', config = {}) {
+function create(menuData = [], target = '', config = {}) {
   const container = document.querySelector(`[data-menuy="${target}"]`)
   initElement(container)
-  config = initConfig(config)
+  const initedConfig = initConfig(config, defaultConfig)
 
   try {
     const validatedMenuData = validateData(menuData, menuDataSchema)
-    const menuTree = renderTree(validatedMenuData, 1, config)
+    const menuTree = renderTree(validatedMenuData, 1, initedConfig)
     container.appendChild(menuTree)
-    return { self: this, target, config, result: menuTree }
+    return { self: this, target, initedConfig, result: menuTree }
   } catch (err) {
     if (err instanceof ValidationError) {
       console.error(`${err.prefix}: ${err.message}`, err.data)
@@ -23,7 +23,7 @@ export function create(menuData = [], target = '', config = {}) {
   }
 }
 
-export function observe(create) {
+function observe(create) {
   if (typeof create !== 'object' || create === null || !hasProperty(create, 'self') || create.self !== this) {
     throw new ValidationError('Invalid create argument. Only accept menuy.create() as an argument of observe()', { input: create })
   }
@@ -43,10 +43,18 @@ export function observe(create) {
   return new Proxy([], handler)
 }
 
-function initConfig(config) {
-  config.layer = config?.layer || defaultConfig.layer
-  config.layer = config?.layer.length === 0 ? defaultConfig.layer : config.layer
-  return config
+function initConfig(config, defaultConfig) {
+  const mergedConfig = defaultConfig
+  for (const [key, value] of Object.entries(config)) {
+    if (typeof value === 'object') {
+      initConfig(value, mergedConfig[key] || {})
+    } else {
+      if (hasProperty(mergedConfig, key)) {
+        mergedConfig[key] = config[key]
+      }
+    }    
+  }
+  return mergedConfig
 }
 
 const menuDataSchema = {
