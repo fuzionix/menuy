@@ -43,8 +43,8 @@ function observe(create) {
   return new Proxy([], handler)
 }
 
-function initConfig(config, defaultConfig) {
-  // Limit the number of array item not exceeding the user's number of array item to ensure complete array overwritten
+function initConfig(config, defaultConfig, custom = false) {
+  // Limit the number of array item not exceeding the user's number of array item to ensure complete array overwritting
   if (Array.isArray(defaultConfig)) {
     defaultConfig = defaultConfig.slice(0, (defaultConfig.length - config.length) * -1)
   }
@@ -52,10 +52,18 @@ function initConfig(config, defaultConfig) {
   const mergedConfig = defaultConfig
   for (const [key, value] of Object.entries(config)) {
     if (typeof value === 'object') {
-      mergedConfig[key] = initConfig(value, mergedConfig[key] || {})
+      if (key === 'style') {
+        mergedConfig[key] = initConfig(value, mergedConfig[key] || {}, true)
+      } else {
+        mergedConfig[key] = initConfig(value, mergedConfig[key] || {})
+      }
     } else {
-      if (hasProperty(mergedConfig, key)) {
+      if (custom) {
         mergedConfig[key] = config[key]
+      } else {
+        if (hasProperty(mergedConfig, key)) {
+          mergedConfig[key] = config[key]
+        }
       }
     }    
   }
