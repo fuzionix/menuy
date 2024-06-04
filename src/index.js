@@ -46,7 +46,7 @@ function observe(create) {
 function initConfig(config, defaultConfig, custom = false) {
   // Limit the number of array item not exceeding the user's number of array item to ensure complete array overwritting
   if (Array.isArray(defaultConfig)) {
-    defaultConfig = defaultConfig.slice(0, (defaultConfig.length - config.length) * -1)
+    defaultConfig = defaultConfig.slice(0, (defaultConfig.length - Math.max(config.length, 1)) * -1)
   }
 
   const mergedConfig = defaultConfig

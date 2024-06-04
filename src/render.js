@@ -72,10 +72,6 @@ export function initElement(element) {
 
 function createIcon(item, layerItem) {
   let icon = null
-  if (hasProperty(layerItem, 'iconType') && hasProperty(layerItem.iconType, 'tag') && (layerItem.iconType.tag === 'i')) {
-    icon = document.createElement(layerItem.iconType.tag)
-  } else {
-    icon = document.createElement('img')
-  }
+  icon = document.createElement(layerItem.iconType.tag)
   return icon
 }
