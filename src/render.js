@@ -9,7 +9,7 @@ export function renderTree(menuData, depth = 1, config = {}) {
     const liItemText = document.createElement('p')
     const layerItem = config.layer[Math.min(config.layer.length, depth) - 1]
 
-    if (hasProperty(item, 'icon') || hasProperty(layerItem, 'icon')) {
+    if (hasProperty(item, 'icon') || (hasProperty(layerItem, 'icon') && layerItem.icon !== null)) {
       liItem.appendChild(createIcon(item, layerItem))
     }
 
@@ -59,10 +59,16 @@ export function initElement(element) {
       }
 
       ${selector} {
-          line-height: 1
+        line-height: 1
       }
+
       ${selector} ol, ${selector} ul{
-          list-style: none
+        list-style: none
+      }
+
+      ${selector} button {
+        display: flex;
+        align-items: center;
       }
     `
 
@@ -72,6 +78,12 @@ export function initElement(element) {
 
 function createIcon(item, layerItem) {
   let icon = null
-  icon = document.createElement(layerItem.iconType.tag)
+  icon = document.createElement(layerItem.iconConfig.tag)
+  if (hasProperty(layerItem, 'icon') && layerItem.icon !== null) {
+    icon.setAttribute(layerItem.iconConfig.attribute, layerItem.icon)
+  } else {
+    icon.setAttribute(layerItem.iconConfig.attribute, item.icon)
+  }
+  icon.setAttribute('width', layerItem.iconConfig.size)
   return icon
 }

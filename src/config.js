@@ -3,37 +3,59 @@ export const defaultConfig = {
   observable: true,
   layer: [
     {
-      iconType: {
+      style: {
+        height: '3.75rem'
+      },
+      icon: null,
+      iconConfig: {
+        size: 20,
         tag: 'img',
-        attribute: 'src'
+        attribute: 'src',
       },
     },
     {
-      iconType: {
+      style: {
+        height: '3.75rem'
+      },
+      icon: null,
+      iconConfig: {
+        size: 20,
         tag: 'img',
-        attribute: 'src'
+        attribute: 'src',
       },
     },
     {
-      iconType: {
+      style: {
+        height: '3.75rem'
+      },
+      icon: null,
+      iconConfig: {
+        size: 20,
         tag: 'img',
-        attribute: 'src'
+        attribute: 'src',
       },
     },
     {
-      iconType: {
+      style: {
+        height: '3.75rem'
+      },
+      icon: null,
+      iconConfig: {
+        size: 20,
         tag: 'img',
-        attribute: 'src'
+        attribute: 'src',
       },
     },
     {
-      iconType: {
+      style: {
+        height: '3.75rem'
+      },
+      icon: null,
+      iconConfig: {
+        size: 20,
         tag: 'img',
-        attribute: 'src'
+        attribute: 'src',
       },
     },
   ],
-  style: {
-    height: '3.75rem'
-  }
 }
