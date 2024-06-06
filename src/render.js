@@ -1,7 +1,17 @@
 import { hasProperty } from "./util"
 
 export function renderTree(menuData, depth = 1, config = {}) {
+  const container = document.createElement('div')
+  const branchLine = document.createElement('div')
   const ul = document.createElement('ul')
+
+  Object.assign(container.style, {
+    display: 'flex'
+  })
+
+  Object.assign(branchLine.style, {
+    padding: '0px 10px'
+  })
 
   for (const item of menuData) {
     const li = document.createElement('li')
@@ -26,9 +36,11 @@ export function renderTree(menuData, depth = 1, config = {}) {
     }
 
     ul.appendChild(li)
+    container.appendChild(branchLine)
+    container.appendChild(ul)
   }
 
-  return ul
+  return container
 }
 
 export function initElement(element) {
