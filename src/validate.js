@@ -21,6 +21,16 @@ export function validateData(data, schema, root = true) {
   return data
 }
 
+export function validateConfig(config, schema) {
+  if (typeof config !== 'object' || Array.isArray(config) || config === null) {
+    throw new ValidationError(`config must be an object not ${Object.prototype.toString.call(config)}`, { input: config })
+  }
+
+  iterateSchema(config, schema)
+
+  return config
+}
+
 function iterateSchema(item, schema) {
   for (const [key, rule] of Object.entries(schema)) {
     const value = item[key]

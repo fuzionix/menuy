@@ -1,6 +1,6 @@
 import { renderTree, initElement } from "./render"
 import { defaultConfig } from "./config"
-import { validateData } from "./validate"
+import { validateData, validateConfig } from "./validate"
 import { ValidationError } from './error'
 import { hasProperty } from "./util"
 
@@ -11,6 +11,7 @@ function create(menuData = [], target = '', config = {}) {
 
   try {
     const validatedMenuData = validateData(menuData, menuDataSchema)
+    const validatedConfig = validateConfig(initedConfig, configSchema)
     const menuTree = renderTree(validatedMenuData, 1, initedConfig)
     container.appendChild(menuTree)
     return { self: this, target, initedConfig, result: menuTree }
@@ -87,7 +88,9 @@ const menuDataSchema = {
 }
 
 const configSchema = {
-
+  indent: {
+    type: 'number'
+  }
 }
 
 export default {
