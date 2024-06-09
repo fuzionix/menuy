@@ -89,7 +89,13 @@ const menuDataSchema = {
 
 const configSchema = {
   indent: {
-    type: 'number'
+    type: 'number',
+  },
+  layer: {
+    type: 'array',
+    schema: {
+      
+    }
   }
 }
 
