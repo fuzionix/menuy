@@ -1,4 +1,5 @@
 import { ValidationError } from './error'
+import { hasProperty } from "./util"
 
 export function validateData(data, schema, root = true) {
   if (!Array.isArray(data) || data === null) {
@@ -37,9 +38,6 @@ export function validateConfig(config, schema, root = true) {
 function iterateSchema(item, schema) {
   for (const [key, rule] of Object.entries(schema)) {
     const value = item[key]
-    if (rule.schema) {
-      iterateSchema(item, rule.schema)
-    }
     if (rule.required && value === undefined) {
       throw new ValidationError(`${key} is required`, { input: item })
     }
@@ -50,9 +48,30 @@ function iterateSchema(item, schema) {
             throw new ValidationError(`${key} must be a number`, { input: value })
           }
           break
+        case 'string':
+          if (typeof value !== 'string') {
+            throw new ValidationError(`${key} must be a string`, { input: value })
+          }
+          break
         case 'array':
           if (!Array.isArray(value) || value.length === 0) {
             throw new ValidationError(`${key} must be an array`, { input: value })
+          }
+          if (rule.schema) {
+            for (const item of value) {
+              if (hasProperty(rule, 'itemType') && typeof item !== rule.itemType) {
+                throw new ValidationError(`Array items in ${key} must be ${rule.itemType}`, { input: value })
+              }
+              iterateSchema(item, rule.schema)
+            }
+          }
+          break
+        case 'object':
+          if (typeof value !== 'object' || value === null) {
+            throw new ValidationError(`${key} must be an object`, { input: value })
+          }
+          if (rule.schema) {
+            iterateSchema(value, rule.schema)
           }
           break
       }

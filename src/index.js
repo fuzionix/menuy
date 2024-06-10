@@ -12,7 +12,7 @@ function create(menuData = [], target = '', config = {}) {
   try {
     const validatedMenuData = validateData(menuData, menuDataSchema)
     const validatedConfig = validateConfig(initedConfig, configSchema)
-    const menuTree = renderTree(validatedMenuData, 1, initedConfig)
+    const menuTree = renderTree(validatedMenuData, 1, validatedConfig)
     container.appendChild(menuTree)
     return { self: this, target, initedConfig, result: menuTree }
   } catch (err) {
@@ -93,8 +93,22 @@ const configSchema = {
   },
   layer: {
     type: 'array',
+    itemType: 'object',
     schema: {
-      
+      iconConfig: {
+        type: 'object',
+        schema: {
+          size: {
+            type: 'number'
+          },
+          tag: {
+            type: 'string'
+          },
+          attribute: {
+            type: 'string'
+          }
+        }
+      }
     }
   }
 }
