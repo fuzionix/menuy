@@ -23,6 +23,8 @@ export function renderTree(menuData, depth = 1, config = {}) {
       liItem.appendChild(createIcon(item, layerItem))
     }
 
+    Object.assign(liItem.style, layerItem.style)
+
     liItemText.textContent = item.name
     liItem.appendChild(liItemText)
     liItem.addEventListener('click', () => {

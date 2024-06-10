@@ -95,6 +95,9 @@ const configSchema = {
     type: 'array',
     itemType: 'object',
     schema: {
+      style: {
+        type: 'object'
+      },
       iconConfig: {
         type: 'object',
         schema: {

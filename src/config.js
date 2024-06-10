@@ -4,7 +4,8 @@ export const defaultConfig = {
   layer: [
     {
       style: {
-        height: '3.75rem'
+        height: '2.25rem',
+        padding: '0 10px'
       },
       icon: null,
       iconConfig: {
@@ -15,7 +16,8 @@ export const defaultConfig = {
     },
     {
       style: {
-        height: '3.75rem'
+        height: '1.75rem',
+        padding: '0 10px'
       },
       icon: null,
       iconConfig: {
@@ -26,7 +28,8 @@ export const defaultConfig = {
     },
     {
       style: {
-        height: '3.75rem'
+        height: '1.5rem',
+        padding: '0 10px'
       },
       icon: null,
       iconConfig: {
@@ -37,7 +40,8 @@ export const defaultConfig = {
     },
     {
       style: {
-        height: '3.75rem'
+        height: '1.5rem',
+        padding: '0 10px'
       },
       icon: null,
       iconConfig: {
@@ -48,7 +52,8 @@ export const defaultConfig = {
     },
     {
       style: {
-        height: '3.75rem'
+        height: '1.5rem',
+        padding: '0 10px'
       },
       icon: null,
       iconConfig: {
