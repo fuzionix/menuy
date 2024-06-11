@@ -98,6 +98,14 @@ const configSchema = {
       style: {
         type: 'object'
       },
+      container: {
+        type: 'object',
+        schema: {
+          marginBottom: {
+            type: 'string'
+          }
+        }
+      },
       iconConfig: {
         type: 'object',
         schema: {

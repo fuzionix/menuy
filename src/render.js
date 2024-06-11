@@ -23,6 +23,9 @@ export function renderTree(menuData, depth = 1, config = {}) {
       liItem.appendChild(createIcon(item, layerItem))
     }
 
+    Object.assign(li.style, {
+      marginBottom: layerItem.container.marginBottom
+    })
     Object.assign(liItem.style, layerItem.style)
 
     liItemText.textContent = item.name
